@@ -1,0 +1,22 @@
+{
+  "name": "monkey-data/eshop-xml-feed-generator",
+  "description": "MonkeyData eshop XML feed generator",
+  "keywords": ["monkeydata", "xml", "feed"],
+  "license": "MIT",
+  "homepage": "https://developers.monkeydata.com",
+  "authors": [
+    {
+      "name": "MD Developers",
+      "email": "info@monkeydata.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "MonkeyData\\EshopXmlFeedGenerator\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
