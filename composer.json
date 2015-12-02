@@ -1,13 +1,13 @@
 {
-  "name": "monkey-data/eshop-xml-feed-generator",
-  "description": "MonkeyData eshop XML feed generator",
-  "keywords": ["monkeydata", "xml", "feed"],
+  "name": "monkey-data/online-store-xml-feed-generator",
+  "description": "MonkeyData online store XML feed generator",
+  "keywords": ["monkeydata", "xml", "feed", "php"],
   "license": "MIT",
   "homepage": "https://developers.monkeydata.com",
   "authors": [
     {
-      "name": "MD Developers",
-      "email": "info@monkeydata.com"
+      "name": "MonkeyData Developers",
+      "email": "api@monkeydata.com"
     }
   ],
   "require": {
