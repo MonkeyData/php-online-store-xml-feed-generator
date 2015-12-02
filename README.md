@@ -1,7 +1,7 @@
 # MonkeyData PHP Online Store XML feed generator
 
-[![Latest Stable Version](https://poser.pugx.org/monkey-data/eshop-xml-feed-generator/v/stable)](https://packagist.org/packages/monkey-data/eshop-xml-feed-generator)
-[![License](https://poser.pugx.org/monkey-data/eshop-xml-feed-generator/license)](https://packagist.org/packages/monkey-data/eshop-xml-feed-generator)
+[![Latest Stable Version](https://poser.pugx.org/monkey-data/online-store-xml-feed-generator/v/stable)](https://packagist.org/packages/monkey-data/online-store-xml-feed-generator)
+[![License](https://poser.pugx.org/monkey-data/online-store-xml-feed-generator/license)](https://packagist.org/packages/monkey-data/online-store-xml-feed-generator)
 
 
 ## Documentation of MonkeyData XML Library
