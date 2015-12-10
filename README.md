@@ -5,18 +5,20 @@
 
 
 ## Documentation of MonkeyData XML Library
-
 Thank you for choosing our library for implementation. The library is prepared to easily implement XML feed for MonkeyData. We've tried to correct all types of possible errors which could happen during the library implementation to ensure maximum reliability, data and time sophistication.
 
 The library is build to simplify creating of your XML file with orders from your online store with parametres of order dates from and to the specific date. It also implements two basic ways of authentization, which can be set in the MonkeyData library itself. You don't have to care about the outgoing XML structure, correct headings or security questions, if you don't want to.
 
+Note: Minimum required version of PHP is 5.5.0
+
 ## Library instalation
-### Composer
+Note: Minimum required version of PHP is 5.5.0
+### 1) Composer
 Require this package with composer using the following command
 ```bash
 composer require monkey-data/online-store-xml-feed-generator
 ```
-### Direct
+### 2) Direct
 Download the library in "resources" section, then unzip it anywhere to your project. Usually, the external libraries are localized in folders "libs", "vendor" or similar. Everything depends on your online store solution. It's also possible to run the library completely off your project, independently. For implemeation just create web space and coby the library there.
 
 ### Implementation example
