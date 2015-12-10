@@ -25,7 +25,7 @@ class CategoryEntity extends Entity {
 
     public function addItem($item) {
         $class_name = get_class($item);
-        $namespace = "MonkeyData\\XmlGenerator\\Entities\\";
+        $namespace = "MonkeyData\\EshopXmlFeedGenerator\\XmlGenerator\\Entities\\";
         if (!in_array($class_name, array("{$namespace}CategoryIdEntity", "{$namespace}CategoryNameEntity", "{$namespace}CategoryLevelEntity"))) {
             throw new Exception("Unexpected Entity");
         }

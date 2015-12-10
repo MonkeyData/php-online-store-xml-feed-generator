@@ -82,7 +82,7 @@ class Beans {
      */
     private function prepareEntityName($name) {
         $words = explode("_", $name);
-        $out = "MonkeyData\\XmlGenerator\\Entities\\";
+        $out = "MonkeyData\\EshopXmlFeedGenerator\\XmlGenerator\\Entities\\";
         foreach($words as $word)  {
             $out .= ucfirst($word);
         }
