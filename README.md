@@ -9,20 +9,30 @@ Thank you for choosing our library for implementation. The library is prepared t
 
 The library is build to simplify creating of your XML file with orders from your online store with parametres of order dates from and to the specific date. It also implements two basic ways of authentization, which can be set in the MonkeyData library itself. You don't have to care about the outgoing XML structure, correct headings or security questions, if you don't want to.
 
-Note: Minimum required version of PHP is 5.5.0
-
 ## Library instalation
-Note: Minimum required version of PHP is 5.5.0
-### 1) Composer
+Note: Minimum required version of PHP is 5.4.0
+#### 1. Composer
 Require this package with composer using the following command
 ```bash
 composer require monkey-data/online-store-xml-feed-generator
 ```
-### 2) Direct
+#### 2. Direct
+
+https://github.com/MonkeyData/php-online-store-xml-feed-generator/archive/master.zip
+
 Download the library in "resources" section, then unzip it anywhere to your project. Usually, the external libraries are localized in folders "libs", "vendor" or similar. Everything depends on your online store solution. It's also possible to run the library completely off your project, independently. For implemeation just create web space and coby the library there.
 
+### Quick implementation example
+
+1. There is an 'example' folder where you find 3 files with example implementation without composer autoload.
+These files are to be copied to a folder that is accessible from web browser.
+
+2. A model 'MonkeyDataXmlModel' should be edited according your database structure in order to get all needed data out of DB.
+
+
 ### Implementation example
-We've prepared an example for quick and easy implementation.  Open the adress with your library in your browser. For example: https://localhost/vas-eshop/vendor/MonkeyData/?hash=123456. If this web space is accessible (not forbiden via .htaccess), a sample XML will appear in the window (start of index.php). If you have a space for scripts in you application, which is not publicly accessible, put the file index.php into the public part of your application and rewrite tracks to files in require functions.
+
+We've prepared an example for quick and easy implementation.  Open the address with your library in your browser. For example: https://localhost/vas-eshop/vendor/MonkeyData/?hash=123456. If this web space is accessible (not forbiden via .htaccess), a sample XML will appear in the window (start of index.php). If you have a space for scripts in you application, which is not publicly accessible, put the file index.php into the public part of your application and rewrite tracks to files in require functions.
 
 File index.php contents these lines:
 
