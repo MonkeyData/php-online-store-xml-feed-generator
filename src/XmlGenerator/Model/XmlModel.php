@@ -434,7 +434,7 @@ abstract class XmlModel implements XmlModelInterface {
      */
     private function getCategoryTree($categoryList, $categoryId, $usageCategoriesList = array()) {
         $result = array();
-        $index = array_search($categoryId, array_column($categoryList, 'id'));
+        $index = array_search($categoryId, array_search($categoryList, 'id'));
         if ($index !== false) {
             $category = $categoryList[$index];
             if (!is_null($category['parent_id'])) {
