@@ -37,8 +37,7 @@ We've prepared an example for quick and easy implementation.  Open the address w
 File index.php contents these lines:
 
 ```php
-require_once __DIR__ . '/MonkeyDataXmlModel.php';
-require_once __DIR__ . '/MonkeyDataExampleXmlGenerator.php';
+// MonkeyDataExampleXmlGenerator should be loaded via autoload
 
 $xmlGenerator = new MonkeyDataExampleXmlGenerator();
 $xmlGenerator->run();
