@@ -237,7 +237,7 @@ class MonkeyDataXmlModel extends XmlModel implements CurrentXmlModelInterface{
      * This function prepares the list of customers with information about:
      * 
      *
-     * id - user ID
+     * id - user ID must be unique, if all non-registred users have same id (for example 0), must be used something else unique (for example md5(customer_email)).
      * customer_firstname - customer's first name
      * customer_country - country according to customer's address
      * customer_city - country according to customer's address
