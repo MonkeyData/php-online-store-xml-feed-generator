@@ -45,9 +45,9 @@ abstract class XmlModel implements XmlModelInterface {
             'pass' => "db_password"
         ),
         'security' => array(
-            'hash' => "",
-            'login' => "",
-            'pass' => ""
+            // 'hash' => "",
+            // 'login' => "",
+            // 'pass' => ""
         )
     );
     
@@ -346,11 +346,29 @@ abstract class XmlModel implements XmlModelInterface {
     }
 
     /**
+     * Function to get security hash
+     * @return type
+     */
+    public function getAuthenticationHash() {
+        if(file_exists('config.hash')){
+            file_get_contents('config.hash');
+        }
+        if (defined('monkey-data-online-store-xml-feed-generator-hash')) {
+            return monkey-data-online-store-xml-feed-generator-hash;
+        }
+        if(isset($this->config['security']['hash'])){
+            return $this->config['security']['hash'];
+        }
+        throw new \Exception('Hash not defined. Look at https://github.com/MonkeyData/php-online-store-xml-feed-generator');
+    }
+    
+    
+    /**
      * @param string $hash
      * @return bool
      */
     public function authenticateHash($hash) {
-        return $this->config['security']['hash'] === $hash;
+        return $this->getAuthenticationHash() === $hash;
     }
 
     public function authenticateLogin($login, $password) {
