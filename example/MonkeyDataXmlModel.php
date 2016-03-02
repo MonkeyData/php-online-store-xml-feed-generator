@@ -1,5 +1,6 @@
 <?php
 
+use MonkeyData\EshopXmlFeedGenerator\Config;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Model\CurrentXmlModelInterface;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Model\XmlModel;
 
@@ -48,6 +49,13 @@ class MonkeyDataXmlModel extends XmlModel implements CurrentXmlModelInterface{
      * @var string
      */
     protected $eshopId = "1";
+    
+    public function __construct() {
+        parent::__construct();
+        
+        // Change this sequence of code if you dont want to use config.hash file to store hash 
+        // $this->setConfig(new Config("my-secret-hash")); 
+    }
 
     
    
