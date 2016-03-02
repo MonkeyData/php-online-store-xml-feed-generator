@@ -1,6 +1,6 @@
 <?php
 
-namespace MonkeyData\EshopXmlFeedGenerator;
+namespace MonkeyData\EshopXmlFeedGenerator\XmlGenerator;
 
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Exceptions\MonkeyDataEmptyHashException;
 

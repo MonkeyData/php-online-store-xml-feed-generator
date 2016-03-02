@@ -3,7 +3,6 @@
 namespace MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Model;
 
 use Exception;
-use MonkeyData\EshopXmlFeedGenerator\Config;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Beans\CategoryBean;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Beans\CategoryList;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Beans\CustomerBean;
@@ -22,6 +21,7 @@ use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Beans\ProductCategoryBeans;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Beans\ProductsList;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Beans\ShippingBean;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Beans\ShippingList;
+use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Config;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Exceptions\MonkeyDataMissingInputException;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Helpers\MonkeyDataDbHelper;
 
