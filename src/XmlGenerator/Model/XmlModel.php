@@ -122,14 +122,18 @@ abstract class XmlModel implements XmlModelInterface {
      */
     protected $configObject = null;
 
-    public function __construct() {
+    public function __construct(\MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Config $config = null) {
         $this->checkConfig();
         if ($this->config['database']['use']) {
             $this->connection = MonkeyDataDbHelper::getInstance($this->config['database']);
         }
         $this->orders = new OrderList();
         $this->list_of_product_list = new OrderProductsList();
-        $this->setConfig(new Config());
+        
+        if($config === null){
+            $config = new Config();
+        }
+        $this->setConfig($config);
     }
 
     

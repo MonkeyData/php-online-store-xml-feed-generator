@@ -49,14 +49,6 @@ class MonkeyDataXmlModel extends XmlModel implements CurrentXmlModelInterface{
      */
     protected $eshopId = "1";
     
-    public function __construct() {
-        parent::__construct();
-        
-        // Change this sequence of code if you dont want to use config.hash file to store hash 
-        // $this->setConfig(new MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Config("my-secret-hash")); 
-    }
-
-    
    
     /**
      * The function chooses a list of orders in selected period. The period is defined by parametres date_from and date_to.
