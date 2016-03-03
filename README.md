@@ -29,6 +29,22 @@ These files are to be copied to a folder that is accessible from web browser.
 
 2. A model 'MonkeyDataXmlModel' should be edited according your database structure in order to get all needed data out of DB.
 
+### Security
+A hash is used for security sake. After install a random hash is generated, but you are advised to set your own in 'XmlGenerator/config.hash'
+
+**hash is required**
+
+For instance (do not use this example):
+```
+b6eb6a84aeac1f937c354dc3b826c83e
+```
+
+Your url feed must contain hash parameter. For example:
+```
+https://{domain}/{path_to_generator_script}/?hash={hash}
+https://domain.com/monkeydata-generator/?hash=b6eb6a84aeac1f937c354dc3b826c83e
+```
+
 
 ### Implementation example
 
@@ -76,17 +92,9 @@ protected $config = array(
             'name' => "db_name",
             'user' => "db_user",
             'pass' => "db_pass"
-        ),
-        'security' => array(
-            'hash' => "123456",
-            'login' => "john",
-            'pass' => "dow"
         )
     );
 ```
-
-
-In this field $config is also possible to set basic security. The basic security is solved with security hash or login / password combination. These can be used during the connection of a project in MonkeyData administration.
 
 
 ## Feedback
