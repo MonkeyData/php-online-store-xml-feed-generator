@@ -10,7 +10,7 @@ Thank you for choosing our library for implementation. The library is prepared t
 The library is build to simplify creating of your XML file with orders from your online store with parametres of order dates from and to the specific date. It also implements two basic ways of authentization, which can be set in the MonkeyData library itself. You don't have to care about the outgoing XML structure, correct headings or security questions, if you don't want to.
 
 ## Library instalation
-Note: Minimum required version of PHP is 5.4.0
+Note: Minimum required version of PHP is 5.3.0
 #### 1. Composer
 Require this package with composer using the following command
 ```bash
