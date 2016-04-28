@@ -18,5 +18,8 @@
       "MonkeyData\\EshopXmlFeedGenerator\\": "src/"
     }
   },
+  "scripts": {
+      "post-autoload-dump": "php generateHash.php"
+  },
   "minimum-stability": "dev"
 }

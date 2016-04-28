@@ -36,11 +36,6 @@ class MonkeyDataXmlModel extends XmlModel implements CurrentXmlModelInterface{
             'name' => "db_name",
             'user' => "db_user",
             'pass' => "db_pass"
-        ),
-        'security' => array(
-            'hash' => "123456",
-            'login' => "john",
-            'pass' => "dow"
         )
     );
 
@@ -53,7 +48,6 @@ class MonkeyDataXmlModel extends XmlModel implements CurrentXmlModelInterface{
      * @var string
      */
     protected $eshopId = "1";
-
     
    
     /**
