@@ -18,4 +18,7 @@ class MonkeyDataExampleXmlGenerator extends XmlGenerator {
     public function getModel() {
         return new MonkeyDataXmlModel();
     }
+
+   
+
 }
