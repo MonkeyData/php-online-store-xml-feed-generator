@@ -30,7 +30,7 @@ These files are to be copied to a folder that is accessible from web browser.
 2. A model 'MonkeyDataXmlModel' should be edited according your database structure in order to get all needed data out of DB.
 
 ### Security
-A hash is used for security sake. After install a random hash is generated, but you are advised to set your own in 'XmlGenerator/config.hash'
+A hash is used for security sake. After install a random hash is generated, but you are advised to set your own in 'config.hash'
 
 **hash is required**
 
