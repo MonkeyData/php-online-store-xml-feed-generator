@@ -64,7 +64,6 @@ use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Helpers\InputHelper;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Helpers\MDHelper;
 use MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Model\XmlModel;
 
-
 /**
  * Class XmlGenerator
  * @package MonkeyData\EshopXmlFeedGenerator\XmlGenerator\Generate
@@ -106,7 +105,7 @@ abstract class XmlGenerator {
      * @var string
      */
     private $language = "cs";
-    
+
     /**
      *
      * @var XmlModel
@@ -142,30 +141,39 @@ abstract class XmlGenerator {
      * @var OrderProductsList
      */
     private $orderProductBean;
-    
+
     /**
      *
      * @var Config
      */
     public static $debug = false;
-    
     private $config = null;
 
     public function __construct(Config $config = null) {
-        if($config !== null){
-            $this->setConfig($config);
-        }
-        $this->model = $this->getXmlModel();
-        if( InputHelper::handleInput("debug", false) !== false ){
+        if (InputHelper::handleInput("debug", false) !== false) {
             static::$debug = true;
         }
+        if (!XmlGenerator::isNotDebug()) {
+            error_reporting(E_ALL);
+            echo "<pre>";
+        }else{
+            $this->showXmlHeader();
+        }
+       
+       
+        if ($config === null) {
+            $config = new Config();
+        }
+        $this->setConfig($config);
+        $this->model = $this->getXmlModel();
+     
     }
 
     /**
      * @return XmlModel
      */
     abstract function getModel();
-    
+
     /**
      * 
      * @return XmlModel
@@ -173,43 +181,42 @@ abstract class XmlGenerator {
      */
     protected final function getXmlModel() {
         $model = $this->getModel();
-        if( !($model instanceof XmlModel) ){
+        if (!($model instanceof XmlModel)) {
             throw new MonkeyDataInvalidModelException();
         }
-        if($this->getConfig() !== null){
+        if ($this->getConfig() !== null) {
             $model->setConfig($this->getConfig());
         }
         return $model;
     }
 
     public function run() {
-        if( !XmlGenerator::isNotDebug() ){
-            error_reporting(E_ALL);
-            echo "<pre>";
-        }
-        $time_start = MDHelper::microtime_float();
-        $this->handleParams();
-        $this->authenticate();
-        $this->categoriesList = $this->getXmlModel()->getCategoriesItems();
-        if( XmlGenerator::isNotDebug() ){
-            $this->showXmlHeader();
+        try {
+            $time_start = MDHelper::microtime_float();
+            $this->handleParams();
+            $this->authenticate();
+            $this->categoriesList = $this->getXmlModel()->getCategoriesItems();
             
+            $eshopEntity = new EshopEntity();
+            echo $eshopEntity->getStartTag();
+            echo new VersionEntity();
+            $this->generate();
+            $time_end = MDHelper::microtime_float();
+            $time = $time_end - $time_start;
+            echo new RuntimeEntity($time . " s");
+            echo new MemoryUsageEntity((memory_get_peak_usage(true) / 1024) . " kB");
+            echo $eshopEntity->getEndTag();
+        } catch (Exception $e) {
+            echo '<pre>';
+            var_dump($e);
+            exit;
         }
-        $eshopEntity = new EshopEntity();
-        echo $eshopEntity->getStartTag();
-        echo new VersionEntity();
-        $this->generate();
-        $time_end = MDHelper::microtime_float();
-        $time = $time_end - $time_start;
-        echo new RuntimeEntity($time." s");
-        echo new MemoryUsageEntity((memory_get_peak_usage(true) / 1024)." kB");
-        echo $eshopEntity->getEndTag();
     }
 
     /**
      * zpracovani povinnych a nepovinnych parametru
      */
-    private function handleParams(){
+    private function handleParams() {
         $this->handleDates();
         $this->handleAuthorization();
         $this->handleLanguage();
@@ -220,7 +227,7 @@ abstract class XmlGenerator {
         $start = $this->model->getStart();
         $this->model = $this->getXmlModel();
         $this->model->setStart($start);
-        
+
         //fill data from DB to local variables
         $this->model->prepareOrders($this->date_from, $this->date_to);
 
@@ -228,32 +235,33 @@ abstract class XmlGenerator {
         if (count($orders) == 0) {
             return; //end of calling this recursive function
         }
-        
-        
+
+
         $this->orderStatusBean = $this->model->getOrderStatuses($this->model->getOrderStatusesIds());
         $this->payment = $this->model->getPayments($this->model->getPaymentIds());
         $this->shipping = $this->model->getShippings($this->model->getShipppingIds());
         $this->customerBean = $this->model->getCustomers($this->model->getCustomerIds());
         $this->orderProductBean = $this->model->getProducts($this->model->getOrderIds());
 
-        
+
         foreach ($orders as $order) {
             $this->showShopOrder($order);
         }
-        
+
         if (count($orders) < $this->model->getStep()) {
             return;
         }
-        if(XmlGenerator::isNotDebug())$this->generate();
+        if (XmlGenerator::isNotDebug())
+            $this->generate();
     }
-    
+
     /**
      * 
      * @param OrderBean $order
      */
     private function showShopOrder($order) {
         $shopOrder = new ShopOrderEntity();
-        
+
         // basic order section
         $shopOrder->addItem(new ShopIdEntity($this->model->getEshopId()));
         $shopOrder->addItem(new ShopNameEntity($this->model->getEshopName()));
@@ -264,19 +272,19 @@ abstract class XmlGenerator {
         $shopOrder->addItem(new CurrencyEntity($order->currency));
         $shopOrder->addItem(new PriceEntity($order->price));
         $shopOrder->addItem(new PriceWithoutVatEntity($order->price_without_vat));
-        
+
         // order status section
         $orderStatusBean = $this->orderStatusBean->getBeanById($order->order_status_id);
         $shopOrder->addItem(new OrderStatusIdEntity($order->order_status_id));
         $shopOrder->addItem(new OrderStatusNameEntity($orderStatusBean->order_status_name));
-        
+
         // payment section
         $payment = $this->payment->getBeanById($order->payment_id);
         $shopOrder->addItem(new PaymentIdEntity($order->payment_id));
         $shopOrder->addItem(new PaymentNameEntity($payment->payment_name));
         $shopOrder->addItem(new PaymentPriceEntity($payment->payment_price));
         $shopOrder->addItem(new PaymentPriceWithoutVatEntity($payment->payment_price_without_vat));
-        
+
         // shipping section
         if ($shipping = $this->shipping->getBeanById($order->shipping_id)) {
             $shopOrder->addItem(new ShippingIdEntity($order->shipping_id));
@@ -285,7 +293,7 @@ abstract class XmlGenerator {
             $shopOrder->addItem(new ShippingPriceWithoutVatEntity($shipping->shipping_price_without_vat));
             $shopOrder->addItem(new NoteEntity($order->note));
         }
-        
+
         // customer section
         if ($customerBean = $this->customerBean->getBeanById($order->customer_id)) {
             $customer = new CustomerEntity();
@@ -300,7 +308,7 @@ abstract class XmlGenerator {
             $customer->addItem(new CustomerIdEntity($customerBean->id));
             $shopOrder->addItem($customer);
         }
-        
+
         // product section
         if ($orderProductBean = $this->orderProductBean->getBeanById($order->id)) {
             $orderProducts = new OrderProductsEntity();
@@ -354,10 +362,10 @@ abstract class XmlGenerator {
      * @throws Exception
      */
     private function handleAuthorization() {
-        $this->hash = InputHelper::handleInput("hash",false);
+        $this->hash = InputHelper::handleInput("hash", false);
         if ($this->hash === false) {
-            $this->login = InputHelper::handleInput("login",false);
-            $this->password = InputHelper::handleInput("password",false);
+            $this->login = InputHelper::handleInput("login", false);
+            $this->password = InputHelper::handleInput("password", false);
             if ($this->login === false OR $this->password === false) {
                 $this->exitWithError("Params 'login' or 'password' or 'hash' is not set.");
             } else {
@@ -372,7 +380,7 @@ abstract class XmlGenerator {
      * @throws Exception
      */
     private function handleLanguage() {
-        $language = InputHelper::handleInput("lang",false);
+        $language = InputHelper::handleInput("lang", false);
         if ($language !== false) {
             $this->language = $language;
         }
@@ -382,17 +390,17 @@ abstract class XmlGenerator {
      * @throws Exception
      */
     private function handleDates() {
-        $this->date_from = InputHelper::handleInput("datum_od",false);
+        $this->date_from = InputHelper::handleInput("datum_od", false);
         if ($this->date_from === false) {
-            $this->date_from = InputHelper::handleInput("date_from",false);
+            $this->date_from = InputHelper::handleInput("date_from", false);
         }
-        $this->date_to = InputHelper::handleInput("datum_do",false);
+        $this->date_to = InputHelper::handleInput("datum_do", false);
         if ($this->date_to === false) {
-            $this->date_to = InputHelper::handleInput("date_to",false);
+            $this->date_to = InputHelper::handleInput("date_to", false);
         }
         if ($this->date_from === false AND $this->date_to === false) {
-           $this->date_from = date("Y-m-d",  strtotime("-7 DAY"));
-           $this->date_to = date("Y-m-d");
+            $this->date_from = date("Y-m-d", strtotime("-7 DAY"));
+            $this->date_to = date("Y-m-d");
         }
         if ($this->date_from === false) {
             $this->exitWithError("Param 'date_from' is not set.");
@@ -406,7 +414,6 @@ abstract class XmlGenerator {
      * @param string $message
      */
     private function exitWithError($message) {
-        $this->showXmlHeader();
         echo new ErrorEntity($message);
         exit;
     }
@@ -415,11 +422,11 @@ abstract class XmlGenerator {
         header('Content-Type: application/xml; charset=utf-8');
         echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
     }
-    
+
     public static function isNotDebug() {
         return !static::$debug;
     }
-    
+
     /**
      * 
      * @return Config
@@ -433,8 +440,18 @@ abstract class XmlGenerator {
      * @param Config $config
      */
     public function setConfig(Config $config) {
+        $config->setConfigDirectory($this->getConfigDir());
         $this->config = $config;
     }
 
+    protected final function getConfigDir() {
+        $dir = $this->getConfigDirectory();
+        return $dir;
+    }
 
+    protected function getConfigDirectory(){
+        $child = new \ReflectionClass($this);
+        $dir = dirname($child->getFilename());
+        return $dir;
+    }
 }

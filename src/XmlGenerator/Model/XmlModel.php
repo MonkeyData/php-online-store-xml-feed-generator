@@ -129,7 +129,6 @@ abstract class XmlModel implements XmlModelInterface {
         }
         $this->orders = new OrderList();
         $this->list_of_product_list = new OrderProductsList();
-        
         if($config === null){
             $config = new Config();
         }
@@ -500,9 +499,9 @@ abstract class XmlModel implements XmlModelInterface {
             if (!isset($this->config['database'])) {
                 throw new Exception("Config: Database is required");
             }
-            if (!isset($this->config['security'])) {
+            /*if (!isset($this->config['security'])) {
                 throw new Exception("Config: Security is required");
-            }
+            }*/
             if (!isset($this->config['database']['use'])) {
                 throw new Exception("Config -> Database: Use is required");
             }

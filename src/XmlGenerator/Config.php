@@ -15,11 +15,12 @@ class Config {
     const DEFAULT_HASH_VALUE = "my-secret-hash";
 
     private $configFileName = "";
+    private $configDirectory = __DIR__;
     
     private $hash = false;
 
     public function __construct($hash = false) {
-        $this->setConfigFileName(__DIR__ . DIRECTORY_SEPARATOR . Config::HASH_CONFIG_FILE);
+        $this->setConfigFileName($this->getConfigDirectory() . DIRECTORY_SEPARATOR . Config::HASH_CONFIG_FILE);
         $this->setHash($hash);
     }
 
@@ -61,6 +62,17 @@ class Config {
     public function setHash($hash) {
         $this->hash = $hash;
     }
+    
+    public function getConfigDirectory() {
+        return $this->configDirectory;
+    }
+
+    public function setConfigDirectory($configDirectory) {
+        $this->setConfigFileName($configDirectory . DIRECTORY_SEPARATOR . Config::HASH_CONFIG_FILE);
+        $this->configDirectory = $configDirectory;
+    }
+
+
 
 
 }
