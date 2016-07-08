@@ -263,8 +263,14 @@ abstract class XmlGenerator {
         $shopOrder = new ShopOrderEntity();
 
         // basic order section
-        $shopOrder->addItem(new ShopIdEntity($this->model->getEshopId()));
-        $shopOrder->addItem(new ShopNameEntity($this->model->getEshopName()));
+        if (property_exists($order, 'shop_id') && !is_null($order->shop_id) &&
+            property_exists($order, 'shop_name') && !is_null($order->shop_name)) {
+            $shopOrder->addItem(new ShopIdEntity($order->shop_id));
+            $shopOrder->addItem(new ShopNameEntity($order->shop_name));
+        } else {
+            $shopOrder->addItem(new ShopIdEntity($this->model->getEshopId()));
+            $shopOrder->addItem(new ShopNameEntity($this->model->getEshopName()));
+        }
         $shopOrder->addItem(new IdOrderEntity($order->id));
         $shopOrder->addItem(new DateCreatedEntity($order->date_created));
         $shopOrder->addItem(new DateUpdatedEntity($order->date_updated));
