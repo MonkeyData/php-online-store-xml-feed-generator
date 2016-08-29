@@ -101,4 +101,4 @@ protected $config = array(
 
 Please submit issues, and send your feedback and suggestions as often as you have them.
 
-In case you need help, contact MonkeyData developers by email at api@monkeydata.com.
+In case you need help, contact MonkeyData developers by email at [api@monkeydata.com](mailto:api@monkeydata.com).
